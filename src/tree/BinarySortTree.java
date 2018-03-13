@@ -1,5 +1,8 @@
 package tree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BinarySortTree<T> {
 	private Node<T> root;
 	
@@ -9,7 +12,7 @@ public class BinarySortTree<T> {
 	
 	public static void main(String[] args) {
 		BinarySortTree<Integer> sortTree = new BinarySortTree<Integer>();
-		for (int i = 1; i <= 15; i++) {
+		for (int i = 1; i <= 30; i++) {
 			sortTree.add(new Node<Integer>(i));
 		}
 		sortTree.print();
@@ -22,6 +25,43 @@ public class BinarySortTree<T> {
 		midPrint(root);
 		System.out.println();
 		afterPrint(root);
+		System.out.println();
+		layerPrint(root);
+	}
+	
+	private void layerPrint(Node<T> node) {
+		// °´²ãÊä³ö
+		if(node == null) {
+			return;
+		}
+		List<Node<T>> nodes = new ArrayList<>();
+		nodes.add(node);
+		while(node != null) {
+			List<Node<T>> list = new ArrayList<>();
+			for (Node<T> temp:nodes) {
+				System.out.print(temp.getVolue()+" ");
+				if(temp.leftNode != null) {
+					list.add(temp.leftNode);
+				}else {
+					nodes = list;
+					node = node.leftNode;
+					break;
+				}
+				if(temp.rightNode != null) {
+					list.add(temp.rightNode);
+				} else {
+					nodes = list;
+					node = node.leftNode;
+					break;
+				}
+			}
+			nodes = list;
+			node = node.leftNode;
+		}
+		for(Node<T> temp:nodes) {
+			System.out.print(temp.getVolue()+" ");
+		}
+		
 	}
 
 	private void prePrint(Node<T> node) {
